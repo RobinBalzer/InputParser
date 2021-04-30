@@ -2,7 +2,7 @@ public class main {
 
     public static void main(String[] args) throws Exception {
 
-        String queryInput = "query-3.cypher";
+        String queryInput = "query-1.cypher";
         String databaseInput = "play-graph.txt0.txt";
         QueryParser queryParser = new QueryParser(queryInput);
         queryParser.readCypherQuery();

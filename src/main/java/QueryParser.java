@@ -1,5 +1,7 @@
 import java.io.*;
+import java.sql.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 
 public class QueryParser {
@@ -28,14 +30,34 @@ public class QueryParser {
             // this filters out everything but the pattern
             words = line.split("MATCH | RETURN ");
             String pattern = words[1];
-            // System.out.println(pattern);
+            System.out.println(pattern);
 
-            // this gives us the initial and final node and its edges for the query
-            // and every edge in between arbitrary nodes (all nodes between initial and final node)
-            String[] edges = pattern.split("\\(\\)");
+            String[] edges;
+            boolean singleEdgeQuery;
 
-            // System.out.println(edges[0] + " \n" + edges[1] + " \n" + edges[2] + " \n" + edges[3]);
+            // find out how many edges are in the query
+            String tempString = pattern.replaceAll("\\[|\\]", "");
+            int size = pattern.length() - tempString.length();
+            int amountOfEdges = size / 2;
 
+            // special case where we only have one edge
+            if (amountOfEdges == 1) {
+                singleEdgeQuery = true;
+                edges = new String[1];
+                edges[0] = words[1];
+                /*
+                String[] tempEdges = pattern.split("\\(..\\)");
+                // the first element of tempEdges is "", so we have to dump that.
+                edges = Arrays.copyOfRange(tempEdges, 1, tempEdges.length);
+
+
+                 */
+            } else {
+                // this gives us the initial and final node and its edges for the query
+                // and every edge in between arbitrary nodes (all nodes between initial and final node)
+                singleEdgeQuery = false;
+                edges = pattern.split("\\(\\)");
+            }
 
             String label;
             String sourceNode;
@@ -54,6 +76,7 @@ public class QueryParser {
                     sourceNodeId = lastCreatedTempNodeId;
                     sourceNode = lastCreatedTempNode;
                 } else {
+                    // contrary to the targetNode here we do not have to distinguish between single and multi edge queries.
                     sourceNodeId = tempStr.split("\\(|\\)")[1];
                     sourceNode = sourceNodeId + ", true, false";
                 }
@@ -65,11 +88,19 @@ public class QueryParser {
 
                     targetNode = targetNodeId + ", false, false";
                 } else {
-                    // we've found a targetNode, however this is only the case if it is final (i.e. the end of the query)
-                    targetNodeId = tempStr.split("-[>]?\\(|\\)")[1];
+                    if (!singleEdgeQuery) {
+                        // we've found a targetNode, however this is only the case if it is final (i.e. the end of the query)
+                        targetNodeId = tempStr.split("-[>]?\\(|\\)")[1];
+                    }
+                    else {
+                        // special case: single edge query
+                        // e.g. (x0)-[:p1]->(x1) .split("\\(|\\)"); // splitting at every round bracket
+                        // [0] = "", [1] = "x0", [2] = "-[:p1]->", [3] = "x1", [4] = "";
+                        // to get the targetNodeId we have to take [3]!
+                        targetNodeId = tempStr.split("\\(|\\)")[3];
+                    }
                     targetNode = targetNodeId + ", false, true";
                 }
-
                 lastCreatedTempNode = targetNode;
                 lastCreatedTempNodeId = targetNodeId;
 
