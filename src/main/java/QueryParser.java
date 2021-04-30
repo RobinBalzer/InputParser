@@ -69,6 +69,7 @@ public class QueryParser {
 
             for (String tempStr : edges) {
                 String stringBuilder = "";
+                boolean recursiveEdge = tempStr.contains("*");
 
                 // check whether nodes are present ...
                 // sourceNode
@@ -77,29 +78,55 @@ public class QueryParser {
                     sourceNode = lastCreatedTempNode;
                 } else {
                     // contrary to the targetNode here we do not have to distinguish between single and multi edge queries.
+
+                    // we now check whether the edge is recursive
                     sourceNodeId = tempStr.split("\\(|\\)")[1];
-                    sourceNode = sourceNodeId + ", true, false";
+                    if (!recursiveEdge) {
+                        sourceNode = sourceNodeId + ", true, false";
+                    } else {
+                        // recursive query!
+                        // assign the states for the source node accordingly
+
+                        if (!singleEdgeQuery) {
+                            sourceNode = sourceNodeId + ", true, false";
+                        } else {
+                            // if we have a single edge query, we simply have one node (initial and final) with a self loop.
+                            sourceNode = sourceNodeId + ", true, true";
+                        }
+                    }
                 }
                 // targetNode
                 if (!isTargetNodePresent(tempStr)) {
-                    int id = 2 + tempNodeCounter;
-                    targetNodeId = "x" + id;
-                    tempNodeCounter++;
-
-                    targetNode = targetNodeId + ", false, false";
+                    if (!recursiveEdge) {
+                        int id = 2 + tempNodeCounter;
+                        targetNodeId = "x" + id;
+                        tempNodeCounter++;
+                        targetNode = targetNodeId + ", false, false";
+                    } else {
+                        // recursive edge ...
+                        targetNodeId = sourceNodeId;
+                        targetNode = sourceNode;
+                    }
                 } else {
-                    if (!singleEdgeQuery) {
+                    if (!recursiveEdge) {
                         // we've found a targetNode, however this is only the case if it is final (i.e. the end of the query)
-                        targetNodeId = tempStr.split("-[>]?\\(|\\)")[1];
+
+                        if (!singleEdgeQuery) {
+                            targetNodeId = tempStr.split("-[>]?\\(|\\)")[1];
+                        } else {
+                            // special case: single edge query
+                            // e.g. (x0)-[:p1]->(x1) .split("\\(|\\)"); // splitting at every round bracket
+                            // [0] = "", [1] = "x0", [2] = "-[:p1]->", [3] = "x1", [4] = "";
+                            // to get the targetNodeId we have to take [3]!
+                            targetNodeId = tempStr.split("\\(|\\)")[3];
+                        }
+                        targetNode = targetNodeId + ", false, true";
+                    } else {
+                        // recursive edge ...
+                        targetNodeId = sourceNodeId;
+                        targetNode = sourceNode;
+
                     }
-                    else {
-                        // special case: single edge query
-                        // e.g. (x0)-[:p1]->(x1) .split("\\(|\\)"); // splitting at every round bracket
-                        // [0] = "", [1] = "x0", [2] = "-[:p1]->", [3] = "x1", [4] = "";
-                        // to get the targetNodeId we have to take [3]!
-                        targetNodeId = tempStr.split("\\(|\\)")[3];
-                    }
-                    targetNode = targetNodeId + ", false, true";
                 }
                 lastCreatedTempNode = targetNode;
                 lastCreatedTempNodeId = targetNodeId;
@@ -107,10 +134,12 @@ public class QueryParser {
                 if (tempStr.contains("<")) {
                     // negative edge found
                     label = "-" + tempStr.split("p|]")[1];
+                    label = label.replace("*", ""); // remove recursive symbol
                     // System.out.println("negative edge with label " + label);
                 } else if (tempStr.contains(">")) {
                     // positive edge found
                     label = tempStr.split("p|]")[1];
+                    label = label.replace("*", ""); // remove recursive symbol
                     // System.out.println("positive edge with label " + label);
                 } else {
                     // error (or undirected edge found)
