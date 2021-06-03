@@ -1,18 +1,16 @@
 import java.io.*;
-import java.sql.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 
 public class QueryParser {
-    private String path;
+    private final String path;
     public String filename;
-    private ArrayList nodeList;
-    private ArrayList edgeList;
+    private final ArrayList nodeList;
+    private final ArrayList edgeList;
     private int tempNodeCounter;
 
     public QueryParser(String inputFile) {
-        this.path = "src/main/resources/input/" + inputFile;
+        this.path = Settings.inputFileDirectory + inputFile;
         this.filename = inputFile;
         this.nodeList = new ArrayList();
         this.edgeList = new ArrayList();
@@ -196,7 +194,7 @@ public class QueryParser {
 
         System.out.println("writing query data to file ...");
         String outputFilename = filename.split("\\.")[0];
-        File output = new File("src/main/resources/output/" + outputFilename + ".txt");
+        File output = new File(Settings.outputFileDirectory + outputFilename + ".txt");
         FileWriter out;
 
         try {

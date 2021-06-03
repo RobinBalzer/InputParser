@@ -1,16 +1,15 @@
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class DatabaseParser {
     String filename;
     String outputFile;
-    private ArrayList nodeList;
-    private ArrayList edgeList;
-    private String path;
+    private final ArrayList nodeList;
+    private final ArrayList edgeList;
+    private final String path;
 
     public DatabaseParser(QueryParser queryParser, String inputFile) {
-        this.path = "src/main/resources/input/" + inputFile;
+        this.path = Settings.inputFileDirectory + inputFile;
         this.outputFile = queryParser.filename;
         this.filename = inputFile;
         this.nodeList = new ArrayList();
@@ -53,14 +52,13 @@ public class DatabaseParser {
     private void writeParsedData() {
         System.out.println("writing to database data to file ...");
         String outputFilename = outputFile.split("\\.")[0];
-        File output = new File("src/main/resources/output/" + outputFilename + ".txt");
+        File output = new File(Settings.outputFileDirectory + outputFilename + ".txt");
         FileWriter out;
 
         try {
 
             out = new FileWriter(output, true);
 
-            out.write("transducerGraph: \n");
             out.write("databaseGraph: \n");
             out.write("nodes: \n");
 
