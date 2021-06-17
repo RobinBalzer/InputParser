@@ -4,7 +4,6 @@ public class main {
 
     public static void main(String[] args) throws Exception {
 
-        // todo (later or next project): transducer input on args[1], move databaseInput to args[2]
         String queryInput = args[0]; // "query-1.cypher";
         String transducerInput = args[1];
         String databaseInput = args[2]; // "play-graph.txt0.txt";

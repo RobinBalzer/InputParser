@@ -28,7 +28,7 @@ public class QueryParser {
             // this filters out everything but the pattern
             words = line.split("MATCH | RETURN ");
             String pattern = words[1];
-            System.out.println(pattern);
+            // System.out.println(pattern);
 
             String[] edges;
             boolean singleEdgeQuery;
@@ -192,7 +192,7 @@ public class QueryParser {
 
     private void writeParsedData() throws Exception {
 
-        System.out.println("writing query data to file ...");
+        //System.out.println("writing query data to file ...");
         String outputFilename = filename.split("\\.")[0];
         File output = new File(Settings.outputFileDirectory + outputFilename + ".txt");
         FileWriter out;
@@ -216,7 +216,7 @@ public class QueryParser {
             }
 
             out.close();
-            System.out.println(" ... done!");
+            //System.out.println(" ... done!");
 
 
         } catch (IOException e) {

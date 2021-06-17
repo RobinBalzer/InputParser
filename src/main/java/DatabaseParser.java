@@ -50,7 +50,7 @@ public class DatabaseParser {
 
 
     private void writeParsedData() {
-        System.out.println("writing to database data to file ...");
+        //System.out.println("writing to database data to file ...");
         String outputFilename = outputFile.split("\\.")[0];
         File output = new File(Settings.outputFileDirectory + outputFilename + ".txt");
         FileWriter out;
@@ -74,7 +74,7 @@ public class DatabaseParser {
             }
 
             out.close();
-            System.out.println(" ... done!");
+            //System.out.println(" ... done!");
 
         } catch (IOException e) {
             e.printStackTrace();
