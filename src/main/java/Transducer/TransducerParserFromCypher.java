@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import Settings.Settings;
 
+@Deprecated
 public class TransducerParserFromCypher {
     String inputFile;
     String outputFile;

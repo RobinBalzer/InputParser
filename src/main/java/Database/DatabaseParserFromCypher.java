@@ -6,6 +6,7 @@ import Settings.Settings;
 import java.io.*;
 import java.util.ArrayList;
 
+@Deprecated
 public class DatabaseParserFromCypher {
     String filename;
     String outputFile;
