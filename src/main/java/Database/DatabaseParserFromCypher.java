@@ -1,14 +1,19 @@
+package Database;
+
+import Query.QueryParserFromCypher;
+import Settings.Settings;
+
 import java.io.*;
 import java.util.ArrayList;
 
-public class DatabaseParser {
+public class DatabaseParserFromCypher {
     String filename;
     String outputFile;
     private final ArrayList nodeList;
     private final ArrayList edgeList;
     private final String path;
 
-    public DatabaseParser(QueryParser queryParser, String inputFile) {
+    public DatabaseParserFromCypher(QueryParserFromCypher queryParser, String inputFile) {
         this.path = Settings.inputFileDirectory + inputFile;
         this.outputFile = queryParser.filename;
         this.filename = inputFile;

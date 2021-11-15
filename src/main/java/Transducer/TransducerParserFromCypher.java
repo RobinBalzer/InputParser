@@ -1,16 +1,21 @@
+package Transducer;
+
+import Query.QueryParserFromCypher;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import Settings.Settings;
 
-public class TransducerParser {
+public class TransducerParserFromCypher {
     String inputFile;
     String outputFile;
     private ArrayList nodeList;
     private ArrayList edgeList;
     private String path;
 
-    public TransducerParser(QueryParser queryParser) {
+    public TransducerParserFromCypher(QueryParserFromCypher queryParser) {
         // constructor that provides the edit distance transducer for gMark data.
         // very specific, only use this for experiment/test purposes
 
@@ -20,10 +25,14 @@ public class TransducerParser {
 
     }
 
-    public TransducerParser(QueryParser queryParser, String inputFile) {
+    public TransducerParserFromCypher(QueryParserFromCypher queryParser, String inputFile) {
         // handling of a transducer file ...
     }
 
+    /**
+     * handcrafted edit distance transducer for the gMark data.
+     *
+     */
     public void gMarkEditDistance() {
         String stringBuilder = "";
         // add transducerNode t0

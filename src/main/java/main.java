@@ -1,3 +1,7 @@
+import Database.DatabaseParserFromCypher;
+import Query.QueryParserFromCypher;
+import Transducer.TransducerParserFromCypher;
+
 import java.util.Locale;
 
 public class main {
@@ -8,10 +12,10 @@ public class main {
         String transducerInput = args[1];
         String databaseInput = args[2]; // "play-graph.txt0.txt";
 
-        QueryParser queryParser = new QueryParser(queryInput);
+        QueryParserFromCypher queryParser = new QueryParserFromCypher(queryInput);
         queryParser.readCypherQuery();
 
-        TransducerParser transducerParser = new TransducerParser(queryParser);
+        TransducerParserFromCypher transducerParser = new TransducerParserFromCypher(queryParser);
 
         if (transducerInput.toLowerCase(Locale.ROOT).equals("gmark")) {
             transducerParser.gMarkEditDistance();
@@ -19,7 +23,7 @@ public class main {
             transducerParser.emptyTransducer();
         }
 
-        DatabaseParser databaseParser = new DatabaseParser(queryParser, databaseInput);
+        DatabaseParserFromCypher databaseParser = new DatabaseParserFromCypher(queryParser, databaseInput);
         databaseParser.readDatabaseGraph();
     }
 }
