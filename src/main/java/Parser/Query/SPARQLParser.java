@@ -40,8 +40,9 @@ public class SPARQLParser {
 //        }
 //        System.out.println();
 
-        String currentStartingNode = "x0";
-        String currentEndingNode = "x1";
+        String currentStartingNodeIndex = "x0";
+        String currentEndingNodeIndex = "x1";
+
         int indexCounter = 1;
         int patternSize = patternParts.length;
 
@@ -58,19 +59,35 @@ public class SPARQLParser {
 
                 // if it's the last element: endingNoded = x1
                 if (patternSize == 1) {
-                    System.out.println("last iteration");
-                    currentEndingNode = "x1";
+                    currentEndingNodeIndex = "x1";
 
                 } else {
                     // endingNode = a new node.
                     indexCounter = ++indexCounter;
-                    currentEndingNode = "x" + indexCounter;
+                    currentEndingNodeIndex = "x" + indexCounter;
 
                 }
 
-                queryEdgeList.add(Util.classicEdgeBuilder(currentStartingNode, currentEndingNode, label));
-                currentStartingNode = currentEndingNode;
+                queryEdgeList.add(Util.classicEdgeBuilder(currentStartingNodeIndex, currentEndingNodeIndex, label));
+                currentStartingNodeIndex = currentEndingNodeIndex;
                 patternSize--;
+
+                // todo: refactor this into a more readable version...
+                // add the sourceNode if it is not present already
+                if (!queryNodeList.contains(currentStartingNodeIndex + ", " + "false, false") && !currentStartingNodeIndex.equals("x0") && !currentStartingNodeIndex.equals("x1")) {
+                    // System.out.println(sourceNode);
+                    queryNodeList.add(currentStartingNodeIndex + ", " + "false, false");
+                } else {
+                    // System.out.println("found source node");
+                }
+
+                // add the targetNode if it is not present already
+                if (!queryNodeList.contains(currentEndingNodeIndex + ", " + "false, false") && !currentEndingNodeIndex.equals("x1") && !currentEndingNodeIndex.equals("x0")) {
+                    // System.out.println(targetNode);
+                    queryNodeList.add(currentEndingNodeIndex + ", " + "false, false");
+                } else {
+                    // System.out.println("found target node");
+                }
             }
 
         } else {
@@ -81,7 +98,7 @@ public class SPARQLParser {
             if (patternParts[0].contains("^")) {
                 label = Util.negateLabelString(label);
             }
-            queryEdgeList.add(Util.classicEdgeBuilder(currentStartingNode, currentEndingNode, label));
+            queryEdgeList.add(Util.classicEdgeBuilder(currentStartingNodeIndex, currentEndingNodeIndex, label));
         }
     }
 
