@@ -10,5 +10,10 @@ public class Settings {
 
     public static String outputFileDirectory = "src/main/resources/output/"; // use this for Intellij runs
     //public static String outputFileDirectory = "resources/inputParserResults/"; // use this for building the .jar
+
+    public static String fileName;
+    public static String inputQueryFile;
+    public static String inputTransducerFile;
+    public static String inputDatabaseFile;
 }
 

@@ -1,19 +1,19 @@
-package Query;
+package Parser.Query;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import Settings.Settings;
 
-@Deprecated // this doesnt work for any kind of recursion!
-public class QueryParserFromCypher {
+@Deprecated // this doesn't work for any kind of recursion!
+public class CypherParser {
     private final String path;
     public String filename;
     private final ArrayList nodeList;
     private final ArrayList edgeList;
     private int tempNodeCounter;
 
-    public QueryParserFromCypher(String inputFile) {
+    public CypherParser(String inputFile) {
         this.path = Settings.inputFileDirectory + inputFile;
         this.filename = inputFile;
         this.nodeList = new ArrayList();

@@ -1,5 +1,6 @@
-package Parser;
+package Parser.Query;
 
+import Parser.Util;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.BufferedReader;
@@ -9,7 +10,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 // PREFIX : <http://example.org/gmark/> SELECT DISTINCT ?x0 ?x1 WHERE {  {  ?x0 ((^:p3/:p3/^:p3/:p3)) ?x1 . } }
-
 public class SPARQLParser {
     ArrayList queryNodeList = new ArrayList();
     ArrayList queryEdgeList = new ArrayList();
@@ -23,8 +23,8 @@ public class SPARQLParser {
 
         String[] query = line.split("WHERE");
         String pattern = query[1];
-        System.out.println("whole query: " + line);
-        System.out.println("pattern:     " + pattern);
+//        System.out.println("whole query: " + line);
+//        System.out.println("pattern:     " + pattern);
 
         // add initial node
         queryNodeList.add(Util.nodeBuilder("x0", true, false));
@@ -34,11 +34,11 @@ public class SPARQLParser {
         // consists of all label information of the pattern
         String[] patternParts = StringUtils.split(StringUtils.substringBetween(pattern, "?x0 ((", ")) ?x1"), "/");
 
-        System.out.print("pattern parts: ");
-        for (String i : patternParts) {
-            System.out.print(i + ", ");
-        }
-        System.out.println();
+//        System.out.print("pattern parts: ");
+//        for (String i : patternParts) {
+//            System.out.print(i + ", ");
+//        }
+//        System.out.println();
 
         String currentStartingNode = "x0";
         String currentEndingNode = "x1";
