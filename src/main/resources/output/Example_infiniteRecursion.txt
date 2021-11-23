@@ -1,4 +1,4 @@
-name: query-5
+name: query-9
 queryGraph: 
 nodes: 
 x0, true, false
@@ -6,13 +6,12 @@ x1, false, true
 x2, false, false
 x3, false, false
 x4, false, false
-x5, false, false
 edges: 
-x0, x2, 0
-x2, x3, -0
-x3, x4, 0
-x4, x5, 1
-x5, x1, 2
+x0, x2, 1
+x2, x3, -1
+x3, x4, 1
+x4, x1, -1
+x1, x2, 1_rec_
 transducerGraph: 
 t0, true, true
 edges: 

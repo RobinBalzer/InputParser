@@ -12,7 +12,7 @@ public class ParserApplication {
      * An example of the format is stored under resources/StructureOfAQInput.
      * @param args arguments consisting of 3 input files.
      */
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
 
         // store the given arguments globally for easier access
         Settings.inputQueryFile = args[0];

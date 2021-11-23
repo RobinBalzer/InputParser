@@ -61,6 +61,24 @@ public class TransducerParser {
         edgeList.add("t0, t0, -3, -1, 9");
         edgeList.add("t0, t0, -3, -2, 8");
 
+        // negative edges, where the transducer doesnt change the label, are missing.
+        edgeList.add("t0, t0, -0, -0, 0");
+        edgeList.add("t0, t0, -1, -1, 0");
+        edgeList.add("t0, t0, -2, -2, 0");
+        edgeList.add("t0, t0, -3, -3, 0");
+
+        // edges that handle the recursion
+        // Note: they need to contain some kind of weight, else the Dijkstra won't terminate.
+        edgeList.add("t0, t0, 0_rec_, 0, 50");
+        edgeList.add("t0, t0, 1_rec_, 1, 50");
+        edgeList.add("t0, t0, 2_rec_, 2, 50");
+        edgeList.add("t0, t0, 3_rec_, 3, 50");
+        // and their negative counterparts...
+        edgeList.add("t0, t0, -0_rec_, -0, 50");
+        edgeList.add("t0, t0, -1_rec_, -1, 50");
+        edgeList.add("t0, t0, -2_rec_, -2, 50");
+        edgeList.add("t0, t0, -3_rec_, -3, 50");
+
     }
 
     public void emptyTransducer() {
