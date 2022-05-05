@@ -69,15 +69,15 @@ public class TransducerParser {
 
         // edges that handle the recursion
         // Note: they need to contain some kind of weight, else the Dijkstra won't terminate.
-        edgeList.add("t0, t0, 0_rec_, 0, 50");
-        edgeList.add("t0, t0, 1_rec_, 1, 50");
-        edgeList.add("t0, t0, 2_rec_, 2, 50");
-        edgeList.add("t0, t0, 3_rec_, 3, 50");
+        edgeList.add("t0, t0, 0_rec_, 0, 0");
+        edgeList.add("t0, t0, 1_rec_, 1, 0");
+        edgeList.add("t0, t0, 2_rec_, 2, 0");
+        edgeList.add("t0, t0, 3_rec_, 3, 0");
         // and their negative counterparts...
-        edgeList.add("t0, t0, -0_rec_, -0, 50");
-        edgeList.add("t0, t0, -1_rec_, -1, 50");
-        edgeList.add("t0, t0, -2_rec_, -2, 50");
-        edgeList.add("t0, t0, -3_rec_, -3, 50");
+        edgeList.add("t0, t0, -0_rec_, -0, 0");
+        edgeList.add("t0, t0, -1_rec_, -1, 0");
+        edgeList.add("t0, t0, -2_rec_, -2, 0");
+        edgeList.add("t0, t0, -3_rec_, -3, 0");
 
     }
 
